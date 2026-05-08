@@ -1,18 +1,6 @@
 -- AcroMind Admin Dashboard Database Schema
 -- Run this SQL in your Supabase SQL Editor to set up the database
 
--- Create admin users table
-CREATE TABLE admin_users (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  email TEXT UNIQUE NOT NULL,
-  password_hash TEXT NOT NULL,
-  full_name TEXT,
-  role TEXT DEFAULT 'admin',
-  is_active BOOLEAN DEFAULT true,
-  created_at TIMESTAMP DEFAULT NOW(),
-  updated_at TIMESTAMP DEFAULT NOW()
-);
-
 -- Create programs table
 CREATE TABLE programs (
   id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -71,7 +59,6 @@ CREATE TABLE blog_posts (
 );
 
 -- Create RLS policies
-ALTER TABLE admin_users ENABLE ROW LEVEL SECURITY;
 ALTER TABLE programs ENABLE ROW LEVEL SECURITY;
 ALTER TABLE events ENABLE ROW LEVEL SECURITY;
 ALTER TABLE gallery ENABLE ROW LEVEL SECURITY;
@@ -79,10 +66,6 @@ ALTER TABLE blog_posts ENABLE ROW LEVEL SECURITY;
 
 -- Create policies for admin access (you'll need to set up proper auth)
 -- For now, allow all authenticated users to access
-CREATE POLICY "Allow all operations for authenticated users" ON admin_users
-  FOR ALL
-  USING (true);
-
 CREATE POLICY "Allow all operations for authenticated users" ON programs
   FOR ALL
   USING (true);

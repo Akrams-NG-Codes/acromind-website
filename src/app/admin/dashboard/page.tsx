@@ -3,31 +3,46 @@
 import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { signOutAdmin } from '@/lib/admin-auth'
+import { signOutAdmin, getCurrentAdmin, isAdminUser } from '@/lib/admin-auth'
 
 export default function AdminDashboard() {
   const [user, setUser] = useState<any>(null)
+  const [loading, setLoading] = useState(true)
   const router = useRouter()
 
   useEffect(() => {
-    // Check if user is authenticated
-    const checkAuth = async () => {
-      // In a real app, you'd get this from a session/context
-      const storedUser = localStorage.getItem('adminUser')
-      if (!storedUser) {
-        router.push('/admin/login')
-      } else {
-        setUser(JSON.parse(storedUser))
-      }
-    }
-
     checkAuth()
   }, [router])
 
+  const checkAuth = async () => {
+    try {
+      const currentUser = await getCurrentAdmin()
+      if (!currentUser || !isAdminUser(currentUser)) {
+        router.push('/admin/login')
+        return
+      }
+      setUser(currentUser)
+    } catch (error) {
+      router.push('/admin/login')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   const handleLogout = async () => {
     await signOutAdmin()
-    localStorage.removeItem('adminUser')
     router.push('/admin/login')
+  }
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading...</p>
+        </div>
+      </div>
+    )
   }
 
   const modules = [

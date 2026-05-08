@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { signInAdmin } from '@/lib/admin-auth'
+import { signInAdmin, isAdminUser } from '@/lib/admin-auth'
 
 export default function AdminLogin() {
   const [email, setEmail] = useState('')
@@ -24,8 +24,11 @@ export default function AdminLogin() {
         return
       }
 
-      if (data?.session) {
+      if (data?.user && isAdminUser(data.user)) {
         router.push('/admin/dashboard')
+      } else {
+        setError('Access denied. Admin privileges required.')
+        await signOutAdmin() // Sign out if not admin
       }
     } catch (err) {
       setError('An error occurred. Please try again.')
