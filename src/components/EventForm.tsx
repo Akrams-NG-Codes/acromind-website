@@ -1,0 +1,259 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+
+interface EventFormProps {
+  id?: string
+}
+
+export default function EventForm({ id }: EventFormProps) {
+  const [formData, setFormData] = useState({
+    title: '',
+    description: '',
+    date: '',
+    time: '',
+    location: '',
+    image_url: '',
+    event_type: '',
+    status: 'upcoming',
+    is_featured: false,
+  })
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const [imageUploading, setImageUploading] = useState(false)
+  const router = useRouter()
+
+  useEffect(() => {
+    if (id) {
+      fetchEvent()
+    }
+  }, [id])
+
+  const fetchEvent = async () => {
+    try {
+      const response = await fetch(`/api/events/${id}`)
+      if (!response.ok) throw new Error('Failed to fetch event')
+      const data = await response.json()
+      setFormData(data)
+    } catch (err) {
+      setError('Failed to load event')
+    }
+  }
+
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file) return
+
+    setImageUploading(true)
+    try {
+      const formDataForUpload = new FormData()
+      formDataForUpload.append('file', file)
+
+      const response = await fetch('/api/upload', { method: 'POST', body: formDataForUpload })
+      if (!response.ok) throw new Error('Upload failed')
+
+      const { url } = await response.json()
+      setFormData({ ...formData, image_url: url })
+    } catch (err) {
+      setError('Failed to upload image')
+    } finally {
+      setImageUploading(false)
+    }
+  }
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value, type } = e.target
+    setFormData({
+      ...formData,
+      [name]: type === 'checkbox' ? (e.target as HTMLInputElement).checked : value,
+    })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    setLoading(true)
+
+    try {
+      const url = id ? `/api/events/${id}` : '/api/events'
+      const method = id ? 'PATCH' : 'POST'
+
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      })
+
+      if (!response.ok) throw new Error('Failed to save event')
+
+      router.push('/admin/events')
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to save event')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <div className="min-h-screen bg-gray-100">
+      {/* Header */}
+      <header className="bg-white shadow">
+        <div className="max-w-7xl mx-auto px-4 py-6">
+          <Link href="/admin/events" className="text-blue-600 hover:text-blue-800 mb-2 block">
+            ← Back to Events
+          </Link>
+          <h1 className="text-3xl font-bold text-gray-900">{id ? 'Edit Event' : 'Create Event'}</h1>
+        </div>
+      </header>
+
+      {/* Main content */}
+      <main className="max-w-4xl mx-auto px-4 py-12">
+        <div className="bg-white rounded-lg shadow p-8">
+          {error && (
+            <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+              {error}
+            </div>
+          )}
+
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Title</label>
+                <input
+                  type="text"
+                  name="title"
+                  value={formData.title}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Event Type</label>
+                <input
+                  type="text"
+                  name="event_type"
+                  value={formData.event_type}
+                  onChange={handleChange}
+                  placeholder="e.g., Workshop, Performance"
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Date</label>
+                <input
+                  type="date"
+                  name="date"
+                  value={formData.date}
+                  onChange={handleChange}
+                  required
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Time</label>
+                <input
+                  type="time"
+                  name="time"
+                  value={formData.time}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Location</label>
+                <input
+                  type="text"
+                  name="location"
+                  value={formData.location}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+                <select
+                  name="status"
+                  value={formData.status}
+                  onChange={handleChange}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+                >
+                  <option value="upcoming">Upcoming</option>
+                  <option value="ongoing">Ongoing</option>
+                  <option value="completed">Completed</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Description</label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                rows={4}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+              />
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-2">Event Image</label>
+              <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageUpload}
+                  disabled={imageUploading}
+                  className="w-full"
+                />
+                {imageUploading && <p className="text-sm text-gray-600 mt-2">Uploading...</p>}
+                {formData.image_url && (
+                  <div className="mt-4">
+                    <img src={formData.image_url} alt="Event" className="max-w-xs rounded-lg" />
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div>
+              <label className="flex items-center">
+                <input
+                  type="checkbox"
+                  name="is_featured"
+                  checked={formData.is_featured}
+                  onChange={handleChange}
+                  className="w-4 h-4 text-blue-600 border-gray-300 rounded"
+                />
+                <span className="ml-2 text-sm text-gray-700">Featured Event</span>
+              </label>
+            </div>
+
+            <div className="flex gap-4 pt-6">
+              <button
+                type="submit"
+                disabled={loading}
+                className="flex-1 bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 rounded disabled:opacity-50"
+              >
+                {loading ? 'Saving...' : 'Save Event'}
+              </button>
+              <Link
+                href="/admin/events"
+                className="flex-1 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 rounded text-center"
+              >
+                Cancel
+              </Link>
+            </div>
+          </form>
+        </div>
+      </main>
+    </div>
+  )
+}

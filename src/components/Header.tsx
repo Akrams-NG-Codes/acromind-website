@@ -23,7 +23,7 @@ export function Header() {
             <div className="w-8 h-8 bg-purple-600 dark:bg-purple-400 rounded-full flex items-center justify-center text-white dark:text-slate-900 font-bold text-lg">
               A
             </div>
-            <span className="hidden sm:inline">AcroMind</span>
+            <span className="hidden sm:inline">AcroMind Initiative</span>
           </Link>
 
           <nav className="hidden md:flex space-x-1">
