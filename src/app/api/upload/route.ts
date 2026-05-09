@@ -1,5 +1,10 @@
+import path from 'path'
+import sharp from 'sharp'
 import { supabase } from '@/lib/supabase'
 import { NextRequest, NextResponse } from 'next/server'
+
+const browserFriendlyTypes = ['image/jpeg', 'image/png', 'image/webp', 'image/avif', 'image/gif']
+const convertibleTypes = ['image/heic', 'image/heif']
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,15 +18,26 @@ export async function POST(request: NextRequest) {
 
     console.log('[Upload] Processing file:', file.name, 'Size:', file.size, 'Type:', file.type)
 
-    const fileName = `${Date.now()}-${file.name.replace(/\s+/g, '-')}`
-    const fileBuffer = await file.arrayBuffer()
+    const extension = path.extname(file.name).toLowerCase()
+    const safeName = path.basename(file.name, extension).replace(/\s+/g, '-')
+    const originalBuffer = Buffer.from(await file.arrayBuffer())
 
-    console.log('[Upload] Uploading to Supabase Storage:', fileName)
+    let uploadBuffer: Buffer = originalBuffer
+    let uploadContentType = file.type || 'application/octet-stream'
+    let uploadFileName = `${Date.now()}-${safeName}${extension}`
+
+    const isConvertible = convertibleTypes.includes(uploadContentType) || ['.heic', '.heif'].includes(extension)
+    if (isConvertible) {
+      console.log('[Upload] Converting HEIC/HEIF to JPEG')
+      uploadBuffer = await sharp(originalBuffer).jpeg({ quality: 90 }).toBuffer()
+      uploadContentType = 'image/jpeg'
+      uploadFileName = `${Date.now()}-${safeName}.jpeg`
+    }
 
     const { data, error } = await supabase.storage
       .from('acromind-images')
-      .upload(`uploads/${fileName}`, fileBuffer, {
-        contentType: file.type,
+      .upload(`uploads/${uploadFileName}`, uploadBuffer, {
+        contentType: uploadContentType,
         upsert: false,
       })
 

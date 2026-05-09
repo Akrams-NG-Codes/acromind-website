@@ -1,8 +1,9 @@
 import { supabase } from '@/lib/supabase'
 import { NextRequest, NextResponse } from 'next/server'
 
-export async function GET(request: NextRequest, { params }: { params: { id: string } }) {
-  const { data, error } = await supabase.from('programs').select('*').eq('id', params.id).single()
+export async function GET(request: NextRequest, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params
+  const { data, error } = await supabase.from('programs').select('*').eq('id', id).single()
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 404 })
@@ -11,14 +12,15 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   return NextResponse.json(data)
 }
 
-export async function PATCH(request: NextRequest, { params }: { params: { id: string } }) {
+export async function PATCH(request: NextRequest, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params
   try {
     const body = await request.json()
 
     const { data, error } = await supabase
       .from('programs')
       .update(body)
-      .eq('id', params.id)
+      .eq('id', id)
       .select()
 
     if (error) {
@@ -31,8 +33,9 @@ export async function PATCH(request: NextRequest, { params }: { params: { id: st
   }
 }
 
-export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
-  const { error } = await supabase.from('programs').delete().eq('id', params.id)
+export async function DELETE(request: NextRequest, context: { params: Promise<{ id: string }> }) {
+  const { id } = await context.params
+  const { error } = await supabase.from('programs').delete().eq('id', id)
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })

@@ -209,7 +209,7 @@ export default function EventForm({ id }: EventFormProps) {
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-6">
                 <input
                   type="file"
-                  accept="image/*"
+                  accept="image/*,.heic,.heif,.avif,.webp"
                   onChange={handleImageUpload}
                   disabled={imageUploading}
                   className="w-full"
