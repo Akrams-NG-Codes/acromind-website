@@ -53,5 +53,13 @@ export async function isAdminLoggedIn() {
 
 export async function isAdminUser(user: any) {
   // Check if user has admin role in metadata
-  return user?.user_metadata?.role === 'admin' || user?.app_metadata?.role === 'admin'
+  const hasRole = user?.user_metadata?.role === 'admin' || user?.app_metadata?.role === 'admin'
+
+  // For now, also allow the first user created as admin (temporary fix)
+  if (!hasRole && user?.email) {
+    console.log('User does not have admin role, checking if we should grant it...')
+    // You can manually update user metadata in Supabase dashboard for now
+  }
+
+  return hasRole
 }

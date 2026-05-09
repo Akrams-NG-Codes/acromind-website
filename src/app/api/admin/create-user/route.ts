@@ -44,6 +44,25 @@ export async function POST(request: NextRequest) {
       )
     }
 
+    // Update user metadata to ensure admin role is set
+    const { error: updateError } = await supabase.auth.admin.updateUserById(
+      authData.user.id,
+      {
+        user_metadata: {
+          full_name: fullName,
+          role: 'admin',
+        },
+        app_metadata: {
+          role: 'admin',
+        },
+      }
+    )
+
+    if (updateError) {
+      console.error('Update metadata error:', updateError)
+      // Don't fail the request, just log the error
+    }
+
     return NextResponse.json(
       {
         message: 'Admin user created successfully! Please check your email to confirm your account.',

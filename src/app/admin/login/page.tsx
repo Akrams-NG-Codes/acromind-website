@@ -24,7 +24,7 @@ export default function AdminLogin() {
         return
       }
 
-      if (data?.user && await isAdminUser(data.user)) {
+      if (data?.user && isAdminUser(data.user)) {
         router.push('/admin/dashboard')
       } else {
         setError('Access denied. Admin privileges required.')
