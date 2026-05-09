@@ -5,6 +5,21 @@ export async function POST(request: NextRequest) {
   try {
     const { email, password, fullName } = await request.json()
 
+    // Validate input
+    if (!email || !password || !fullName) {
+      return NextResponse.json(
+        { error: 'Email, password, and full name are required' },
+        { status: 400 }
+      )
+    }
+
+    if (password.length < 6) {
+      return NextResponse.json(
+        { error: 'Password must be at least 6 characters' },
+        { status: 400 }
+      )
+    }
+
     // Create admin user in Supabase Auth
     const { data: authData, error: authError } = await supabase.auth.signUp({
       email,
@@ -18,14 +33,35 @@ export async function POST(request: NextRequest) {
     })
 
     if (authError) {
+      console.error('Auth error:', authError)
       return NextResponse.json({ error: authError.message }, { status: 400 })
     }
 
-    return NextResponse.json({
-      message: 'Admin user created successfully! Please check your email to confirm your account.',
-      user: authData.user
-    }, { status: 201 })
+    if (!authData.user) {
+      return NextResponse.json(
+        { error: 'Failed to create user' },
+        { status: 500 }
+      )
+    }
+
+    return NextResponse.json(
+      {
+        message: 'Admin user created successfully! Please check your email to confirm your account.',
+        user: {
+          id: authData.user.id,
+          email: authData.user.email,
+        },
+      },
+      { status: 201 }
+    )
   } catch (err) {
-    return NextResponse.json({ error: 'Invalid request' }, { status: 400 })
+    console.error('Server error:', err)
+    return NextResponse.json(
+      {
+        error: 'An error occurred while creating the admin user. Check that your Supabase connection is working.',
+        details: err instanceof Error ? err.message : 'Unknown error',
+      },
+      { status: 500 }
+    )
   }
 }

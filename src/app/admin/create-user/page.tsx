@@ -66,9 +66,14 @@ export default function CreateAdminUser() {
             Create a new admin user who can access the dashboard. They will receive an email to confirm their account.
           </p>
 
-          {error && (
+      {error && (
             <div className="mb-6 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
-              {error}
+              <p className="font-bold">Error:</p>
+              <p>{error}</p>
+              <details className="mt-2 text-sm">
+                <summary className="cursor-pointer">Show more details</summary>
+                <p className="mt-2">This might help debug the issue. Check your browser console (F12) for more information.</p>
+              </details>
             </div>
           )}
 
