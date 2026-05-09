@@ -1,6 +1,7 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { supabase } from '@/lib/supabase'
+import { DEFAULT_EVENTS } from '@/lib/constants'
 
 export const dynamic = 'force-dynamic'
 
@@ -14,13 +15,13 @@ async function getEvents() {
 
     if (error) {
       console.error('Error fetching events:', error)
-      return []
+      return DEFAULT_EVENTS
     }
 
-    return data || []
+    return data && data.length > 0 ? data : DEFAULT_EVENTS
   } catch (err) {
     console.error('Error:', err)
-    return []
+    return DEFAULT_EVENTS
   }
 }
 

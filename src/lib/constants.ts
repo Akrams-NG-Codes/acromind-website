@@ -84,6 +84,9 @@ export const TESTIMONIALS = [
   },
 ]
 
+export const HERO_IMAGE_URL =
+  '/images/WhatsApp%20Image%202026-05-09%20at%207.28.33%20AM.jpeg'
+
 export const NAVIGATION = [
   { name: 'Home', href: '/' },
   { name: 'About', href: '/about' },
@@ -94,4 +97,82 @@ export const NAVIGATION = [
   { name: 'Impact', href: '/impact' },
   { name: 'Contact', href: '/contact' },
   { name: 'Donate', href: '/donate' },
+]
+
+export const DEFAULT_EVENTS = [
+  {
+    id: 'event-1',
+    title: 'Community Circus Showcase',
+    description: 'A family-friendly performance featuring acrobatics, juggling, and dance by our talented youth performers.',
+    date: '2026-06-20',
+    time: '4:00 PM',
+    location: 'Kampala Community Park',
+    image_url: '/images/WhatsApp%20Image%202026-05-09%20at%207.28.28%20AM.jpeg',
+    event_type: 'Performance',
+    status: 'upcoming',
+    is_featured: true,
+  },
+  {
+    id: 'event-2',
+    title: 'Youth Acrobatics Workshop',
+    description: 'A hands-on workshop for children and young people to learn balance, strength, and teamwork through circus arts.',
+    date: '2026-07-05',
+    time: '10:00 AM',
+    location: 'AcroMind Training Center',
+    image_url: '/images/WhatsApp%20Image%202026-05-09%20at%207.28.29%20AM.jpeg',
+    event_type: 'Workshop',
+    status: 'upcoming',
+    is_featured: false,
+  },
+  {
+    id: 'event-3',
+    title: 'Holiday Performance & Outreach',
+    description: 'Join us for a holiday outreach event celebrating community, creativity, and youth empowerment through circus arts.',
+    date: '2026-08-12',
+    time: '3:00 PM',
+    location: 'Central Community Hall',
+    image_url: '/images/WhatsApp%20Image%202026-05-09%20at%207.28.32%20AM.jpeg',
+    event_type: 'Outreach',
+    status: 'upcoming',
+    is_featured: false,
+  },
+]
+
+export const DEFAULT_GALLERY_ITEMS = [
+  {
+    id: 'gallery-1',
+    title: 'Rehearsal in Progress',
+    description: 'Young performers train together, building strength and confidence.',
+    image_url: '/images/WhatsApp%20Image%202026-05-09%20at%207.28.32%20AM%20(1).jpeg',
+    category: 'Workshop',
+    order_index: 1,
+    is_featured: true,
+  },
+  {
+    id: 'gallery-2',
+    title: 'Circus Arts Performance',
+    description: 'A dynamic showcase filled with acrobatics, juggling, and smiles.',
+    image_url: '/images/WhatsApp%20Image%202026-05-09%20at%207.28.32%20AM%20(2).jpeg',
+    category: 'Performance',
+    order_index: 2,
+    is_featured: true,
+  },
+  {
+    id: 'gallery-3',
+    title: 'Creative Movement',
+    description: 'Children practicing together in a beautifully lit training space.',
+    image_url: '/images/WhatsApp%20Image%202026-05-09%20at%207.28.32%20AM%20(3).jpeg',
+    category: 'Training',
+    order_index: 3,
+    is_featured: false,
+  },
+  {
+    id: 'gallery-4',
+    title: 'Community Celebration',
+    description: 'A joyful moment at a community circus festival.',
+    image_url: '/images/WhatsApp%20Image%202026-05-09%20at%207.28.33%20AM%20(1).jpeg',
+    category: 'Festival',
+    order_index: 4,
+    is_featured: false,
+  },
 ]

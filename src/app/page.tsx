@@ -1,7 +1,7 @@
 import type { ComponentType } from 'react'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
-import { IMPACT_STATS, PROGRAMS } from '@/lib/constants'
+import { HERO_IMAGE_URL, IMPACT_STATS, PROGRAMS } from '@/lib/constants'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { ArrowRight, Users, Sparkles, Shield, Star } from 'lucide-react'
@@ -43,11 +43,45 @@ export default async function Home() {
       <Header />
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-br from-purple-600 to-purple-800 dark:from-purple-900 dark:to-slate-900 text-white py-20 overflow-hidden">
-          <div className="absolute inset-0 opacity-10">
-            <div className="absolute top-0 left-0 w-96 h-96 bg-white rounded-full mix-blend-multiply filter blur-3xl"></div>
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-purple-300 rounded-full mix-blend-multiply filter blur-3xl"></div>
+        <section
+          className="relative text-white py-20 overflow-hidden"
+          style={{
+            backgroundImage: `linear-gradient(rgba(84, 33, 155, 0.75), rgba(10, 24, 48, 0.85)), url("${HERO_IMAGE_URL}")`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        >
+          <div className="absolute inset-0 opacity-40 bg-gradient-to-br from-purple-900 via-purple-800 to-slate-950"></div>
+          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <div className="max-w-3xl">
+              <div className="inline-flex items-center space-x-2 mb-6 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full">
+                <span className="w-2 h-2 bg-white rounded-full"></span>
+                <span className="text-sm font-medium">Empower Children and Youth</span>
+              </div>
+              <h1 className="text-5xl sm:text-6xl font-bold mb-6 leading-tight">
+                Transforming Lives Through Circus Arts
+              </h1>
+              <p className="text-xl text-purple-100 mb-8 max-w-2xl">
+                We empower children and youth through circus arts, acrobatics, and creative expression. Safe spaces where talents flourish and dreams take flight.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link
+                  href="/about"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-white text-purple-600 font-semibold rounded-lg hover:bg-gray-100 transition"
+                >
+                  Learn Our Story
+                  <ArrowRight className="w-4 h-4 ml-2" />
+                </Link>
+                <Link
+                  href="/programs"
+                  className="inline-flex items-center justify-center px-6 py-3 bg-purple-500 text-white font-semibold rounded-lg hover:bg-purple-700 transition"
+                >
+                  Our Programs
+                </Link>
+              </div>
+            </div>
           </div>
+        </section>
 
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="max-w-3xl">

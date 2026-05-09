@@ -1,6 +1,7 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { supabase } from '@/lib/supabase'
+import { DEFAULT_GALLERY_ITEMS } from '@/lib/constants'
 import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
@@ -14,13 +15,13 @@ async function getGalleryItems() {
 
     if (error) {
       console.error('Error fetching gallery:', error)
-      return []
+      return DEFAULT_GALLERY_ITEMS
     }
 
-    return data || []
+    return data && data.length > 0 ? data : DEFAULT_GALLERY_ITEMS
   } catch (err) {
     console.error('Error:', err)
-    return []
+    return DEFAULT_GALLERY_ITEMS
   }
 }
 
