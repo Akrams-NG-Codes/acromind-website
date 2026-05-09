@@ -2,6 +2,8 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { supabase } from '@/lib/supabase'
 
+export const dynamic = 'force-dynamic'
+
 async function getEvents() {
   try {
     const { data, error } = await supabase

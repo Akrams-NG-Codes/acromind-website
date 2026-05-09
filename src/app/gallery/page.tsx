@@ -3,6 +3,8 @@ import { Footer } from '@/components/Footer'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 async function getGalleryItems() {
   try {
     const { data, error } = await supabase

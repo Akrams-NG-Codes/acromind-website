@@ -3,6 +3,8 @@ import { Header } from '@/components/Header'
 import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 
+export const dynamic = 'force-dynamic'
+
 async function getBlogPost(slug: string) {
   try {
     const { data, error } = await supabase

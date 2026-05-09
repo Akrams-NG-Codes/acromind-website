@@ -6,6 +6,8 @@ import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { ArrowRight, Users, Sparkles, Shield, Star } from 'lucide-react'
 
+export const dynamic = 'force-dynamic'
+
 const iconMap: Record<string, ComponentType<{ className?: string }>> = {
   Users,
   Sparkles,

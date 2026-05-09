@@ -5,6 +5,8 @@ import { Users, Sparkles, Shield, Star } from 'lucide-react'
 import Link from 'next/link'
 import type { ComponentType } from 'react'
 
+export const dynamic = 'force-dynamic'
+
 const iconMap: Record<string, ComponentType<{ className?: string }>> = {
   Users,
   Sparkles,
