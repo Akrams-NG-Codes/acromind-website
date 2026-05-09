@@ -55,10 +55,10 @@ export default function AboutPage() {
 
               <div className="space-y-8">
                 <div className="rounded-3xl overflow-hidden bg-gray-900 h-full">
-                  <div className="bg-[url('/images/hero-main.svg')] bg-cover bg-center h-80" />
+                  <div className="bg-[url('/images/WhatsApp%20Image%202026-05-09%20at%207.28.33%20AM.jpeg')] bg-cover bg-center h-80" />
                 </div>
                 <div className="rounded-3xl overflow-hidden bg-gray-900 h-full">
-                  <div className="bg-[url('/images/programs-workshop.svg')] bg-cover bg-center h-80" />
+                  <div className="bg-[url('/images/WhatsApp%20Image%202026-05-09%20at%207.28.32%20AM%20(1).jpeg')] bg-cover bg-center h-80" />
                 </div>
               </div>
             </div>

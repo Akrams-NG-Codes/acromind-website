@@ -7,7 +7,7 @@ export default function ImpactPage() {
     <>
       <Header />
       <main className="bg-white dark:bg-slate-950 text-gray-900 dark:text-gray-100">
-        <section className="relative overflow-hidden bg-[url('/images/community-performance.svg')] bg-cover bg-center py-24">
+        <section className="relative overflow-hidden bg-[url('/images/WhatsApp%20Image%202026-05-09%20at%207.28.32%20AM%20(2).jpeg')] bg-cover bg-center py-24">
           <div className="absolute inset-0 bg-black/70" />
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-white">
             <h1 className="text-4xl sm:text-5xl font-bold mb-4">Measuring What Matters</h1>

@@ -40,7 +40,7 @@ export default async function ProgramsPage() {
     <>
       <Header />
       <main className="bg-white dark:bg-slate-950 text-gray-900 dark:text-gray-100">
-        <section className="relative overflow-hidden bg-[url('/images/community-performance.svg')] bg-cover bg-center py-24">
+        <section className="relative overflow-hidden bg-[url('/images/WhatsApp%20Image%202026-05-09%20at%207.28.28%20AM.jpeg')] bg-cover bg-center py-24">
           <div className="absolute inset-0 bg-black/70" />
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-white">
             <span className="inline-flex items-center rounded-full bg-sky-600/30 px-4 py-2 text-sm font-semibold uppercase tracking-wide mb-4">
