@@ -34,11 +34,11 @@ export default async function GalleryPage() {
       <main className="bg-white dark:bg-slate-950 text-gray-900 dark:text-gray-100">
         <section className="py-24 bg-slate-900 text-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-            <span className="inline-flex items-center rounded-full bg-purple-600/20 px-4 py-2 text-sm font-semibold uppercase tracking-wide mb-4">
+            <span className="inline-flex items-center rounded-full bg-sky-600/20 px-4 py-2 text-sm font-semibold uppercase tracking-wide mb-4">
               Visual Stories
             </span>
             <h1 className="text-4xl sm:text-5xl font-bold mb-4">Gallery</h1>
-            <p className="mx-auto max-w-2xl text-lg text-purple-200">
+            <p className="mx-auto max-w-2xl text-lg text-sky-200">
               A visual journey through our workshops, performances, and community impact.
             </p>
           </div>
@@ -75,11 +75,11 @@ export default async function GalleryPage() {
                         )}
                         <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition">
                           {item.category && (
-                            <p className="text-xs uppercase tracking-[0.2em] text-purple-200 mb-1">{item.category}</p>
+                            <p className="text-xs uppercase tracking-[0.2em] text-sky-200 mb-1">{item.category}</p>
                           )}
                           <h3 className="text-lg font-semibold line-clamp-2">{item.title}</h3>
                           {item.description && (
-                            <p className="text-xs text-purple-100 mt-2 line-clamp-2">{item.description}</p>
+                            <p className="text-xs text-sky-100 mt-2 line-clamp-2">{item.description}</p>
                           )}
                         </div>
                       </div>
@@ -90,7 +90,7 @@ export default async function GalleryPage() {
                 <div className="mt-12 text-center">
                   <Link
                     href="/contact"
-                    className="inline-flex items-center justify-center px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition"
+                    className="inline-flex items-center justify-center px-6 py-3 bg-sky-600 text-white rounded-lg hover:bg-sky-700 transition"
                   >
                     Share Your Story
                   </Link>

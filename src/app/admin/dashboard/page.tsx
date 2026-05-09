@@ -58,7 +58,7 @@ export default function AdminDashboard() {
       description: 'Manage programs and workshops',
       href: '/admin/programs',
       icon: '🎪',
-      color: 'bg-purple-500',
+      color: 'bg-sky-500',
     },
     {
       name: 'Gallery',

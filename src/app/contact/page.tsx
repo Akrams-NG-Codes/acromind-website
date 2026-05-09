@@ -46,11 +46,11 @@ export default function ContactPage() {
       <main className="bg-white dark:bg-slate-950 text-gray-900 dark:text-gray-100">
         <section className="py-24 bg-slate-900 text-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-            <span className="inline-flex items-center rounded-full bg-purple-600/20 px-4 py-2 text-sm font-semibold uppercase tracking-wide mb-4">
+            <span className="inline-flex items-center rounded-full bg-sky-600/20 px-4 py-2 text-sm font-semibold uppercase tracking-wide mb-4">
               Get In Touch
             </span>
             <h1 className="text-4xl sm:text-5xl font-bold mb-4">Contact Us</h1>
-            <p className="mx-auto max-w-2xl text-lg text-purple-200">
+            <p className="mx-auto max-w-2xl text-lg text-sky-200">
               Reach out to us for partnerships, volunteering, or support.
             </p>
           </div>
@@ -71,19 +71,19 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <p className="font-semibold">Email</p>
-                    <a href={`mailto:${ORGANIZATION.email}`} className="text-purple-600 dark:text-purple-400 hover:underline">
+                    <a href={`mailto:${ORGANIZATION.email}`} className="text-sky-600 dark:text-sky-400 hover:underline">
                       {ORGANIZATION.email}
                     </a>
                   </div>
                   <div>
                     <p className="font-semibold">Phone</p>
-                    <a href={`tel:${ORGANIZATION.phone}`} className="text-purple-600 dark:text-purple-400 hover:underline">
+                    <a href={`tel:${ORGANIZATION.phone}`} className="text-sky-600 dark:text-sky-400 hover:underline">
                       {ORGANIZATION.phone}
                     </a>
                   </div>
                   <div>
                     <p className="font-semibold">WhatsApp</p>
-                    <a href={`https://wa.me/${ORGANIZATION.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className="text-purple-600 dark:text-purple-400 hover:underline">
+                    <a href={`https://wa.me/${ORGANIZATION.whatsapp.replace(/\D/g, '')}`} target="_blank" rel="noreferrer" className="text-sky-600 dark:text-sky-400 hover:underline">
                       Chat on WhatsApp
                     </a>
                   </div>
@@ -101,7 +101,7 @@ export default function ContactPage() {
                       type="text"
                       value={form.name}
                       onChange={(event) => setForm({ ...form, name: event.target.value })}
-                      className="mt-2 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-950 px-4 py-3 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="mt-2 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-950 px-4 py-3 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-sky-500"
                       placeholder="Your name"
                     />
                   </label>
@@ -111,7 +111,7 @@ export default function ContactPage() {
                       type="email"
                       value={form.email}
                       onChange={(event) => setForm({ ...form, email: event.target.value })}
-                      className="mt-2 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-950 px-4 py-3 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                      className="mt-2 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-950 px-4 py-3 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-sky-500"
                       placeholder="you@example.com"
                     />
                   </label>
@@ -122,7 +122,7 @@ export default function ContactPage() {
                     type="text"
                     value={form.subject}
                     onChange={(event) => setForm({ ...form, subject: event.target.value })}
-                    className="mt-2 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-950 px-4 py-3 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="mt-2 w-full rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-950 px-4 py-3 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-sky-500"
                     placeholder="How can we help?"
                   />
                 </label>
@@ -131,14 +131,14 @@ export default function ContactPage() {
                   <textarea
                     value={form.message}
                     onChange={(event) => setForm({ ...form, message: event.target.value })}
-                    className="mt-2 w-full min-h-[160px] rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-950 px-4 py-3 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-purple-500"
+                    className="mt-2 w-full min-h-[160px] rounded-2xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-slate-950 px-4 py-3 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-sky-500"
                     placeholder="Write your message here..."
                   />
                 </label>
                 <button
                   type="submit"
                   disabled={loading}
-                  className="inline-flex w-full items-center justify-center rounded-2xl bg-purple-600 px-6 py-3 text-white font-semibold hover:bg-purple-700 transition disabled:opacity-60"
+                  className="inline-flex w-full items-center justify-center rounded-2xl bg-sky-600 px-6 py-3 text-white font-semibold hover:bg-sky-700 transition disabled:opacity-60"
                 >
                   {loading ? 'Sending...' : 'Send Message'}
                 </button>

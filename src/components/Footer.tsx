@@ -25,7 +25,7 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400"
+                    className="text-sm text-gray-600 dark:text-gray-400 hover:text-sky-600 dark:hover:text-sky-400"
                   >
                     {item.name}
                   </Link>
@@ -42,7 +42,7 @@ export function Footer() {
                 <li key={item.href}>
                   <Link
                     href={item.href}
-                    className="text-sm text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400"
+                    className="text-sm text-gray-600 dark:text-gray-400 hover:text-sky-600 dark:hover:text-sky-400"
                   >
                     {item.name}
                   </Link>
@@ -56,23 +56,23 @@ export function Footer() {
             <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-4">Contact</h3>
             <div className="space-y-3">
               <div className="flex items-start space-x-2">
-                <MapPin className="w-4 h-4 text-purple-600 dark:text-purple-400 mt-0.5 flex-shrink-0" />
+                <MapPin className="w-4 h-4 text-sky-600 dark:text-sky-400 mt-0.5 flex-shrink-0" />
                 <p className="text-sm text-gray-600 dark:text-gray-400">{ORGANIZATION.address}</p>
               </div>
               <div className="flex items-center space-x-2">
-                <Mail className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+                <Mail className="w-4 h-4 text-sky-600 dark:text-sky-400 flex-shrink-0" />
                 <a
                   href={`mailto:${ORGANIZATION.email}`}
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400"
+                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-sky-600 dark:hover:text-sky-400"
                 >
                   {ORGANIZATION.email}
                 </a>
               </div>
               <div className="flex items-center space-x-2">
-                <Phone className="w-4 h-4 text-purple-600 dark:text-purple-400 flex-shrink-0" />
+                <Phone className="w-4 h-4 text-sky-600 dark:text-sky-400 flex-shrink-0" />
                 <a
                   href={`tel:${ORGANIZATION.phone}`}
-                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400"
+                  className="text-sm text-gray-600 dark:text-gray-400 hover:text-sky-600 dark:hover:text-sky-400"
                 >
                   {ORGANIZATION.phone}
                 </a>

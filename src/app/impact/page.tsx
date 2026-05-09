@@ -11,7 +11,7 @@ export default function ImpactPage() {
           <div className="absolute inset-0 bg-black/70" />
           <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-white">
             <h1 className="text-4xl sm:text-5xl font-bold mb-4">Measuring What Matters</h1>
-            <p className="mx-auto max-w-2xl text-lg text-purple-200">
+            <p className="mx-auto max-w-2xl text-lg text-sky-200">
               Our impact is defined by the lives we touch, the skills we build, and the communities we strengthen.
             </p>
           </div>
@@ -22,7 +22,7 @@ export default function ImpactPage() {
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4 mb-16">
               {IMPACT_STATS.map((item, idx) => (
                 <div key={idx} className="rounded-3xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-800 p-8 text-center shadow-sm">
-                  <div className="text-4xl font-bold text-purple-600 dark:text-purple-400 mb-3">{item.number}</div>
+                  <div className="text-4xl font-bold text-sky-600 dark:text-sky-400 mb-3">{item.number}</div>
                   <div className="text-gray-700 dark:text-gray-300">{item.label}</div>
                 </div>
               ))}
@@ -32,7 +32,7 @@ export default function ImpactPage() {
               {TESTIMONIALS.map((testimonial, index) => (
                 <div key={index} className="rounded-3xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-800 p-8 shadow-sm">
                   <p className="text-gray-700 dark:text-gray-300 leading-7 mb-6">“{testimonial.quote}”</p>
-                  <p className="font-semibold text-purple-600 dark:text-purple-400">{testimonial.role}</p>
+                  <p className="font-semibold text-sky-600 dark:text-sky-400">{testimonial.role}</p>
                 </div>
               ))}
             </div>

@@ -14,6 +14,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://acromind.org'),
   title: "AcroMind Initiative - Empowering Youth Through Circus Arts",
   description: "Empowering children and youth through circus arts, acrobatics, creative expression, and community engagement in Uganda.",
   keywords: "circus arts, acrobatics, youth empowerment, Uganda, creative expression",
@@ -22,6 +23,7 @@ export const metadata: Metadata = {
     title: "AcroMind Initiative - Empowering Youth Through Circus Arts",
     description: "Empowering children and youth through circus arts in Uganda",
     type: "website",
+    url: 'https://acromind.org',
   },
 };
 

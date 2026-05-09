@@ -34,11 +34,11 @@ export default async function BlogPage() {
       <main className="bg-white dark:bg-slate-950 text-gray-900 dark:text-gray-100">
         <section className="py-24 bg-slate-900 text-white">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center">
-            <span className="inline-flex items-center rounded-full bg-purple-600/20 px-4 py-2 text-sm font-semibold uppercase tracking-wide mb-4">
+            <span className="inline-flex items-center rounded-full bg-sky-600/20 px-4 py-2 text-sm font-semibold uppercase tracking-wide mb-4">
               News & Stories
             </span>
             <h1 className="text-4xl sm:text-5xl font-bold mb-4">Blog</h1>
-            <p className="mx-auto max-w-2xl text-lg text-purple-200">
+            <p className="mx-auto max-w-2xl text-lg text-sky-200">
               Stories, updates, and insights from the AcroMind Initiative
             </p>
           </div>
@@ -54,7 +54,7 @@ export default async function BlogPage() {
               <div className="grid gap-8">
                 {posts.map((post: any) => (
                   <Link key={post.id} href={`/blog/${post.slug}`}>
-                    <article className="group bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-gray-200 dark:border-gray-800 p-8 hover:shadow-lg hover:border-purple-300 dark:hover:border-purple-600 transition cursor-pointer">
+                    <article className="group bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-gray-200 dark:border-gray-800 p-8 hover:shadow-lg hover:border-sky-300 dark:hover:border-sky-600 transition cursor-pointer">
                       <div className="flex flex-col sm:flex-row gap-6">
                         {post.featured_image_url && (
                           <img
@@ -66,7 +66,7 @@ export default async function BlogPage() {
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-3 text-sm text-gray-600 dark:text-gray-400">
                             {post.author && (
-                              <span className="text-purple-600 dark:text-purple-400 font-semibold">
+                              <span className="text-sky-600 dark:text-sky-400 font-semibold">
                                 {post.author}
                               </span>
                             )}
@@ -83,13 +83,13 @@ export default async function BlogPage() {
                               </>
                             )}
                           </div>
-                          <h2 className="text-2xl font-bold mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition">
+                          <h2 className="text-2xl font-bold mb-3 group-hover:text-sky-600 dark:group-hover:text-sky-400 transition">
                             {post.title}
                           </h2>
                           <p className="text-gray-600 dark:text-gray-400 leading-7 mb-4">
                             {post.description || (post.content ? post.content.substring(0, 150) + '...' : '')}
                           </p>
-                          <span className="inline-flex items-center text-purple-600 dark:text-purple-400 font-semibold group-hover:gap-2 gap-1 transition-all">
+                          <span className="inline-flex items-center text-sky-600 dark:text-sky-400 font-semibold group-hover:gap-2 gap-1 transition-all">
                             Read More →
                           </span>
                         </div>
