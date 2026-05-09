@@ -83,37 +83,6 @@ export default async function Home() {
           </div>
         </section>
 
-          <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center space-x-2 mb-6 bg-white/20 backdrop-blur-md px-4 py-2 rounded-full">
-                <span className="w-2 h-2 bg-white rounded-full"></span>
-                <span className="text-sm font-medium">Empower Children and Youth</span>
-              </div>
-              <h1 className="text-5xl sm:text-6xl font-bold mb-6 leading-tight">
-                Transforming Lives Through Circus Arts
-              </h1>
-              <p className="text-xl text-sky-100 mb-8 max-w-2xl">
-                We empower children and youth through circus arts, acrobatics, and creative expression. Safe spaces where talents flourish and dreams take flight.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link
-                  href="/about"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-white text-sky-600 font-semibold rounded-lg hover:bg-gray-100 transition"
-                >
-                  Learn Our Story
-                  <ArrowRight className="w-4 h-4 ml-2" />
-                </Link>
-                <Link
-                  href="/programs"
-                  className="inline-flex items-center justify-center px-6 py-3 bg-sky-500 text-white font-semibold rounded-lg hover:bg-sky-700 transition"
-                >
-                  Our Programs
-                </Link>
-              </div>
-            </div>
-          </div>
-        </section>
-
         {/* Impact Stats */}
         <section className="py-16 bg-white dark:bg-slate-900">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">

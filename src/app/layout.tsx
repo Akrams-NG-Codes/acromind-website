@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { SITE_URL } from '@/lib/constants';
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,16 +15,48 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://acromind.org'),
-  title: "AcroMind Initiative - Empowering Youth Through Circus Arts",
+  metadataBase: new URL(SITE_URL),
+  title: {
+    default: "AcroMind Initiative - Empowering Youth Through Circus Arts",
+    template: "%s | AcroMind Initiative",
+  },
   description: "Empowering children and youth through circus arts, acrobatics, creative expression, and community engagement in Uganda.",
-  keywords: "circus arts, acrobatics, youth empowerment, Uganda, creative expression",
+  keywords: [
+    "AcroMind",
+    "AcroMind Initiative",
+    "circus arts",
+    "Uganda youth empowerment",
+    "children empowerment",
+    "acrobatics",
+    "community arts",
+    "creative education",
+  ],
   authors: [{ name: "AcroMind Initiative" }],
   openGraph: {
     title: "AcroMind Initiative - Empowering Youth Through Circus Arts",
     description: "Empowering children and youth through circus arts in Uganda",
     type: "website",
-    url: 'https://acromind.org',
+    url: SITE_URL,
+    siteName: "AcroMind Initiative",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AcroMind Initiative - Empowering Youth Through Circus Arts",
+    description: "Empowering children and youth through circus arts, acrobatics, creative expression, and community engagement in Uganda.",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-video-preview": -1,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  alternates: {
+    canonical: SITE_URL,
   },
 };
 

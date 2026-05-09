@@ -1,3 +1,5 @@
+export const SITE_URL = 'https://acromind.org'
+
 export const ORGANIZATION = {
   name: 'AcroMind Initiative',
   legalName: 'AcroMind Initiative Limited',
