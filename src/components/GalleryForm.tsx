@@ -44,17 +44,40 @@ export default function GalleryForm({ id }: GalleryFormProps) {
     if (!file) return
 
     setImageUploading(true)
+    setError('')
     try {
+      console.log('[GalleryForm] Starting image upload for:', file.name)
+
       const formDataForUpload = new FormData()
       formDataForUpload.append('file', file)
 
-      const response = await fetch('/api/upload', { method: 'POST', body: formDataForUpload })
-      if (!response.ok) throw new Error('Upload failed')
+      const response = await fetch('/api/upload', {
+        method: 'POST',
+        body: formDataForUpload,
+      })
 
-      const { url } = await response.json()
-      setFormData({ ...formData, image_url: url })
+      const responseData = await response.json()
+      console.log('[GalleryForm] Upload response:', responseData)
+
+      if (!response.ok) {
+        throw new Error(
+          responseData.details
+            ? `Upload failed: ${responseData.details}`
+            : responseData.error || 'Upload failed'
+        )
+      }
+
+      if (!responseData.url) {
+        throw new Error('No URL returned from upload')
+      }
+
+      console.log('[GalleryForm] Image URL received:', responseData.url)
+      setFormData({ ...formData, image_url: responseData.url })
+      setError('')
     } catch (err) {
-      setError('Failed to upload image')
+      const errorMsg = err instanceof Error ? err.message : 'Failed to upload image'
+      console.error('[GalleryForm] Upload error:', errorMsg)
+      setError(errorMsg)
     } finally {
       setImageUploading(false)
     }
