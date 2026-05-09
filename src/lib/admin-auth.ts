@@ -51,7 +51,7 @@ export async function isAdminLoggedIn() {
   return !!session
 }
 
-export async function isAdminUser(user: any) {
+export function isAdminUser(user: any) {
   // Check if user has admin role in metadata
   const hasRole = user?.user_metadata?.role === 'admin' || user?.app_metadata?.role === 'admin'
 
