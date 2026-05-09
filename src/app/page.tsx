@@ -2,6 +2,7 @@ import type { ComponentType } from 'react'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
 import { IMPACT_STATS, PROGRAMS } from '@/lib/constants'
+import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 import { ArrowRight, Users, Sparkles, Shield, Star } from 'lucide-react'
 
@@ -12,7 +13,29 @@ const iconMap: Record<string, ComponentType<{ className?: string }>> = {
   Star,
 }
 
-export default function Home() {
+async function getPrograms() {
+  try {
+    const { data, error } = await supabase
+      .from('programs')
+      .select('*')
+      .eq('is_active', true)
+      .order('order_index', { ascending: true })
+      .limit(4)
+
+    if (error) {
+      console.error('Error fetching programs:', error)
+      return PROGRAMS // Fallback to hardcoded programs
+    }
+
+    return data && data.length > 0 ? data : PROGRAMS
+  } catch (err) {
+    console.error('Error:', err)
+    return PROGRAMS // Fallback to hardcoded programs
+  }
+}
+
+export default async function Home() {
+  const programs = await getPrograms()
   return (
     <>
       <Header />
@@ -86,8 +109,8 @@ export default function Home() {
               Transformative programs designed to develop skills, build confidence, and create lasting change.
             </p>
             <div className="grid md:grid-cols-2 gap-8">
-              {PROGRAMS.map((program) => {
-                const Icon = iconMap[program.icon]
+              {programs.map((program: any) => {
+                const Icon = iconMap[program.icon] || Users
                 return (
                   <div
                     key={program.id}
@@ -105,12 +128,14 @@ export default function Home() {
                           {program.description}
                         </p>
                         <ul className="space-y-2">
-                          {program.highlights.map((highlight, idx) => (
-                            <li key={idx} className="flex items-center text-sm text-gray-600 dark:text-gray-400">
-                              <span className="w-1.5 h-1.5 bg-purple-600 dark:bg-purple-400 rounded-full mr-2"></span>
-                              {highlight}
-                            </li>
-                          ))}
+                          {Array.isArray(program.highlights) && program.highlights.length > 0 ? (
+                            program.highlights.map((highlight: any, idx: number) => (
+                              <li key={idx} className="flex items-center text-sm text-gray-600 dark:text-gray-400">
+                                <span className="w-1.5 h-1.5 bg-purple-600 dark:bg-purple-400 rounded-full mr-2"></span>
+                                {highlight}
+                              </li>
+                            ))
+                          ) : null}
                         </ul>
                       </div>
                     </div>

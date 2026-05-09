@@ -1,22 +1,30 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { supabase } from '@/lib/supabase'
 
-const events = [
-  {
-    title: 'AcroMind Community Workshop',
-    date: '2026-07-15',
-    location: 'Kampala Community Center',
-    description: 'A multi-day workshop focused on circus skills, teamwork, and confidence-building activities for young people.',
-  },
-  {
-    title: 'Public Performance Night',
-    date: '2026-08-05',
-    location: 'Luganda Park',
-    description: 'A joyful community performance showcasing the talents of our participants and celebrating creative expression.',
-  },
-]
+async function getEvents() {
+  try {
+    const { data, error } = await supabase
+      .from('events')
+      .select('*')
+      .eq('status', 'upcoming')
+      .order('date', { ascending: true })
 
-export default function EventsPage() {
+    if (error) {
+      console.error('Error fetching events:', error)
+      return []
+    }
+
+    return data || []
+  } catch (err) {
+    console.error('Error:', err)
+    return []
+  }
+}
+
+export default async function EventsPage() {
+  const events = await getEvents()
+
   return (
     <>
       <Header />
@@ -35,20 +43,38 @@ export default function EventsPage() {
 
         <section className="py-16 bg-gray-50 dark:bg-slate-900">
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-8">
-              {events.map((event, index) => (
-                <div key={index} className="rounded-3xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-800 shadow-sm p-8">
-                  <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 mb-4">
-                    <div>
-                      <h2 className="text-2xl font-bold">{event.title}</h2>
-                      <p className="text-sm text-purple-600 dark:text-purple-400 font-semibold mt-2">{event.location}</p>
+            {events.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-gray-600 dark:text-gray-400 text-lg">No upcoming events at the moment. Check back soon!</p>
+              </div>
+            ) : (
+              <div className="grid gap-8">
+                {events.map((event: any) => (
+                  <div key={event.id} className="rounded-3xl bg-white dark:bg-slate-900 border border-gray-200 dark:border-gray-800 shadow-sm p-8 hover:shadow-md transition">
+                    <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4 mb-4">
+                      <div className="flex-1">
+                        <h2 className="text-2xl font-bold">{event.title}</h2>
+                        <p className="text-sm text-purple-600 dark:text-purple-400 font-semibold mt-2">{event.location}</p>
+                        {event.event_type && (
+                          <span className="inline-block mt-2 bg-purple-100 dark:bg-purple-900 text-purple-800 dark:text-purple-100 px-3 py-1 rounded-full text-xs">
+                            {event.event_type}
+                          </span>
+                        )}
+                      </div>
+                      {event.date && (
+                        <p className="text-sm text-gray-600 dark:text-gray-400 whitespace-nowrap">
+                          {new Date(event.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}
+                        </p>
+                      )}
                     </div>
-                    <p className="text-sm text-gray-600 dark:text-gray-400">{new Date(event.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+                    <p className="text-gray-700 dark:text-gray-300 leading-7">{event.description}</p>
+                    {event.image_url && (
+                      <img src={event.image_url} alt={event.title} className="mt-4 rounded-lg w-full max-h-80 object-cover" />
+                    )}
                   </div>
-                  <p className="text-gray-700 dark:text-gray-300 leading-7">{event.description}</p>
-                </div>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       </main>

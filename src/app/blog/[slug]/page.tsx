@@ -1,36 +1,31 @@
 import { Footer } from '@/components/Footer'
 import { Header } from '@/components/Header'
+import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 
-const posts = [
-  {
-    slug: 'empowering-youth-through-acrobatics',
-    title: 'Empowering Youth Through Acrobatics',
-    author: 'AcroMind Team',
-    date: '2026-04-10',
-    content: [
-      'Our recent workshop helped young people build confidence, discipline, and teamwork through circus art training. Participants gained new skills and a stronger sense of belonging.',
-      'Circus arts are a powerful vehicle for positive change, helping youth discover their strengths while learning in a supportive environment.',
-    ],
-  },
-  {
-    slug: 'safeguarding-children-in-creative-spaces',
-    title: 'Safeguarding Children in Creative Spaces',
-    author: 'AcroMind Team',
-    date: '2026-03-18',
-    content: [
-      'We prioritize child protection in every activity. Our safeguarding training ensures artists and volunteers create safe, respectful, and empowering environments.',
-      'This approach allows children to explore creative expression with confidence and trust.',
-    ],
-  },
-]
+async function getBlogPost(slug: string) {
+  try {
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .select('*')
+      .eq('slug', slug)
+      .eq('is_published', true)
+      .single()
 
-export function generateStaticParams() {
-  return posts.map((post) => ({ slug: post.slug }))
+    if (error) {
+      console.error('Error fetching blog post:', error)
+      return null
+    }
+
+    return data
+  } catch (err) {
+    console.error('Error:', err)
+    return null
+  }
 }
 
-export default function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = posts.find((item) => item.slug === params.slug)
+export default async function BlogPostPage({ params }: { params: { slug: string } }) {
+  const post = await getBlogPost(params.slug)
 
   if (!post) {
     return (
@@ -54,21 +49,54 @@ export default function BlogPostPage({ params }: { params: { slug: string } }) {
     <>
       <Header />
       <main className="min-h-screen bg-white dark:bg-slate-950 text-gray-900 dark:text-gray-100">
-        <div className="mx-auto max-w-5xl px-4 sm:px-6 lg:px-8 py-20">
-          <div className="space-y-4">
-            <div className="text-sm uppercase tracking-[0.2em] text-purple-600">News & Stories</div>
-            <h1 className="text-4xl font-bold">{post.title}</h1>
-            <div className="text-sm text-gray-500 dark:text-gray-400">{post.author} · {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
-            <div className="space-y-6 text-gray-700 dark:text-gray-300 leading-8">
-              {post.content.map((paragraph, index) => (
-                <p key={index}>{paragraph}</p>
-              ))}
+        <article className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-20">
+          <div className="space-y-4 mb-8">
+            <div className="text-sm uppercase tracking-[0.2em] text-purple-600 dark:text-purple-400">
+              News & Stories
             </div>
-            <Link href="/blog" className="inline-flex items-center px-5 py-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition">
-              Back to Blog
-            </Link>
+            <h1 className="text-4xl font-bold">{post.title}</h1>
+            <div className="flex items-center gap-3 text-sm text-gray-600 dark:text-gray-400">
+              {post.author && <span className="font-semibold text-purple-600 dark:text-purple-400">{post.author}</span>}
+              {post.published_at && (
+                <>
+                  <span>·</span>
+                  <span>
+                    {new Date(post.published_at).toLocaleDateString('en-US', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })}
+                  </span>
+                </>
+              )}
+            </div>
           </div>
-        </div>
+
+          {post.featured_image_url && (
+            <img
+              src={post.featured_image_url}
+              alt={post.title}
+              className="w-full h-96 object-cover rounded-2xl mb-8"
+            />
+          )}
+
+          {post.description && (
+            <p className="text-lg text-gray-700 dark:text-gray-300 mb-8 leading-7">{post.description}</p>
+          )}
+
+          <div className="prose prose-invert max-w-none text-gray-700 dark:text-gray-300 leading-8 space-y-6 mb-8">
+            {post.content && (
+              <div className="whitespace-pre-wrap">{post.content}</div>
+            )}
+          </div>
+
+          <Link
+            href="/blog"
+            className="inline-flex items-center px-5 py-3 rounded-full bg-purple-600 text-white hover:bg-purple-700 transition"
+          >
+            ← Back to Blog
+          </Link>
+        </article>
       </main>
       <Footer />
     </>

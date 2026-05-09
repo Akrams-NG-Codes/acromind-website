@@ -1,25 +1,31 @@
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { supabase } from '@/lib/supabase'
 import Link from 'next/link'
 
-const posts = [
-  {
-    title: 'Empowering Youth Through Acrobatics',
-    excerpt: 'Our recent workshop helped young people build confidence, discipline, and teamwork through circus art training.',
-    author: 'AcroMind Team',
-    date: '2026-04-10',
-    href: '/blog/empowering-youth-through-acrobatics',
-  },
-  {
-    title: 'Safeguarding Children in Creative Spaces',
-    excerpt: 'We prioritize child protection in every activity with training and care built into our programs.',
-    author: 'AcroMind Team',
-    date: '2026-03-18',
-    href: '/blog/safeguarding-children-in-creative-spaces',
-  },
-]
+async function getBlogPosts() {
+  try {
+    const { data, error } = await supabase
+      .from('blog_posts')
+      .select('*')
+      .eq('is_published', true)
+      .order('published_at', { ascending: false })
 
-export default function BlogPage() {
+    if (error) {
+      console.error('Error fetching blog posts:', error)
+      return []
+    }
+
+    return data || []
+  } catch (err) {
+    console.error('Error:', err)
+    return []
+  }
+}
+
+export default async function BlogPage() {
+  const posts = await getBlogPosts()
+
   return (
     <>
       <Header />
@@ -31,25 +37,66 @@ export default function BlogPage() {
             </span>
             <h1 className="text-4xl sm:text-5xl font-bold mb-4">Blog</h1>
             <p className="mx-auto max-w-2xl text-lg text-purple-200">
-              Stories, updates, and insights from our work across Uganda.
+              Stories, updates, and insights from the AcroMind Initiative
             </p>
           </div>
         </section>
 
         <section className="py-16 bg-gray-50 dark:bg-slate-900">
-          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-            <div className="grid gap-8 md:grid-cols-2">
-              {posts.map((post) => (
-                <article key={post.href} className="rounded-3xl bg-white dark:bg-slate-900 shadow-sm border border-gray-200 dark:border-gray-800 p-8 hover:shadow-md transition">
-                  <div className="mb-4 text-sm text-purple-600 dark:text-purple-400 font-semibold">{post.author} · {new Date(post.date).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</div>
-                  <h2 className="text-2xl font-bold mb-3">{post.title}</h2>
-                  <p className="text-gray-600 dark:text-gray-300 leading-7 mb-6">{post.excerpt}</p>
-                  <Link href={post.href} className="inline-flex items-center text-purple-600 dark:text-purple-400 font-semibold hover:underline">
-                    Read More
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+            {posts.length === 0 ? (
+              <div className="text-center py-12">
+                <p className="text-gray-600 dark:text-gray-400 text-lg">No blog posts published yet. Check back soon!</p>
+              </div>
+            ) : (
+              <div className="grid gap-8">
+                {posts.map((post: any) => (
+                  <Link key={post.id} href={`/blog/${post.slug}`}>
+                    <article className="group bg-white dark:bg-slate-800 rounded-3xl shadow-sm border border-gray-200 dark:border-gray-800 p-8 hover:shadow-lg hover:border-purple-300 dark:hover:border-purple-600 transition cursor-pointer">
+                      <div className="flex flex-col sm:flex-row gap-6">
+                        {post.featured_image_url && (
+                          <img
+                            src={post.featured_image_url}
+                            alt={post.title}
+                            className="w-full sm:w-48 h-48 object-cover rounded-2xl flex-shrink-0"
+                          />
+                        )}
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-3 text-sm text-gray-600 dark:text-gray-400">
+                            {post.author && (
+                              <span className="text-purple-600 dark:text-purple-400 font-semibold">
+                                {post.author}
+                              </span>
+                            )}
+                            {post.published_at && (
+                              <>
+                                <span>·</span>
+                                <span>
+                                  {new Date(post.published_at).toLocaleDateString('en-US', {
+                                    year: 'numeric',
+                                    month: 'long',
+                                    day: 'numeric',
+                                  })}
+                                </span>
+                              </>
+                            )}
+                          </div>
+                          <h2 className="text-2xl font-bold mb-3 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition">
+                            {post.title}
+                          </h2>
+                          <p className="text-gray-600 dark:text-gray-400 leading-7 mb-4">
+                            {post.description || (post.content ? post.content.substring(0, 150) + '...' : '')}
+                          </p>
+                          <span className="inline-flex items-center text-purple-600 dark:text-purple-400 font-semibold group-hover:gap-2 gap-1 transition-all">
+                            Read More →
+                          </span>
+                        </div>
+                      </div>
+                    </article>
                   </Link>
-                </article>
-              ))}
-            </div>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       </main>
